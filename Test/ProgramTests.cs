@@ -97,5 +97,73 @@ namespace Test
             //Assert
             Assert.AreEqual(expected, sw.ToString());
         }
+
+        [TestMethod]
+        public void Greet_Should_repeat_lastest_greeting_when_input_is_repeat()
+        {
+            //Arrange
+            var program = new Program();
+            var input = new string[] { "Tommy", "Andreas", "CRABPEOPLE", "Megatron", "Tarzan" };
+            var inputRepeat = "repeat";
+            var expected = $"Hello, {input[0]}, {input[1]}, {input[3]} and {input[4]}. AND HELLO {input[2]}!" + Environment.NewLine + $"Hello, {input[0]}, {input[1]}, {input[3]} and {input[4]}. AND HELLO {input[2]}!" + Environment.NewLine;
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+            //Act
+            program.Greet(input);
+            program.Greet(inputRepeat);
+            //Assert
+            Assert.AreEqual(expected, sw.ToString());
+        }
+
+
+        [TestMethod]
+        public void Greet_Should_save_a_greeting_and_reply_with_saved_when_prefixed_by_an_index()
+        {
+            //Arrange
+            var program = new Program();
+            var inputInt = 1;
+            var inputString = new string[] { "Tommy", "Andreas", "CRABPEOPLE", "Megatron", "Tarzan" };
+            var expected = $"Greeting saved on position {inputInt}" + Environment.NewLine;
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+            //Act
+            program.Greet(inputInt, inputString);
+            //Assert
+            Assert.AreEqual(expected, sw.ToString());
+        }
+
+        [TestMethod]
+        public void Greet_Should_save_a_greeting_and_reply_with_updated_when_prefixed_by_an_index()
+        {
+            //Arrange
+            var program = new Program();
+            var inputInt = 1;
+            var inputString = new string[] { "Tommy", "Andreas", "CRABPEOPLE", "Megatron", "Tarzan" };
+            var expected = $"Greeting saved on position {inputInt}" + Environment.NewLine + $"Greeting updated on position {inputInt}" + Environment.NewLine;
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+            //Act
+            program.Greet(inputInt, inputString);
+            program.Greet(inputInt, inputString);
+            //Assert
+            Assert.AreEqual(expected, sw.ToString());
+        }
+
+        [TestMethod]
+        public void Greet_Should_repeat_a_saved_greeting_with_matching_index()
+        {
+            //Arrange
+            var program = new Program();
+            var inputInt = 1;
+            var inputString = new string[] { "Tommy", "Andreas", "CRABPEOPLE", "Megatron", "Tarzan" };
+            var expected = $"Greeting saved on position {inputInt}" + Environment.NewLine + $"Hello, {inputString[0]}, {inputString[1]}, {inputString[3]} and {inputString[4]}. AND HELLO {inputString[2]}!" + Environment.NewLine;
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+            //Act
+            program.Greet(inputInt, inputString);
+            program.Greet(inputInt);
+            //Assert
+            Assert.AreEqual(expected, sw.ToString());
+        }
     }
 }
